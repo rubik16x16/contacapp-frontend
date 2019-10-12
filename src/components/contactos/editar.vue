@@ -73,7 +73,6 @@ export default {
       valid: false,
       dialog: false,
       nuevoContacto: {
-        id: 10,
         nombre: '',
         email: '',
         telefono: '',
@@ -104,9 +103,18 @@ export default {
     actualizar(){
       if(this.valid){
 
-        this.dialog = false;
-        this.$emit('actualizar', this.nuevoContacto);
-        this.clear();
+        axios.put(`contactos/${this.nuevoContacto.id}`, this.nuevoContacto)
+          .then(res => {
+
+            console.log('res');
+            this.$emit('actualizar', res.data);
+            this.dialog = false;
+            this.clear();
+          })
+          .catch(e => {
+
+            console.log(e.response);
+          });
       }else{
 
         this.validate();

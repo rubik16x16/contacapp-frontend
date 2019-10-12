@@ -49,37 +49,20 @@ export default {
         editar: false
       },
       editarContacto: null,
-      contactos:[
-        {
-          id: 1,
-          nombre: 'contacto 1',
-          email: 'contacto1@g.com',
-          telefono: '1234567',
-          direccion: 'direccion contacto1'
-        },
-        {
-          id: 2,
-          nombre: 'contacto 2',
-          email: 'contacto2@g.com',
-          telefono: '1234567',
-          direccion: 'direccion contacto2'
-        },
-        {
-          id: 3,
-          nombre: 'contacto 3',
-          email: 'contacto3@g.com',
-          telefono: '1234567',
-          direccion: 'direccion contacto3'
-        },
-        {
-          id: 4,
-          nombre: 'contacto 4',
-          email: 'contacto4@g.com',
-          telefono: '1234567',
-          direccion: 'direccion contacto4'
-        }
-      ]
+      contactos:[]
     }
+  },
+  mounted(){
+
+    axios.get('contactos')
+      .then(res => {
+
+        this.contactos = res.data;
+      })
+      .catch(e => {
+
+        console.log(e.response);
+      });
   },
   methods: {
 
@@ -105,6 +88,15 @@ export default {
 
       let index = this.contactos.indexOf(contacto);
       this.contactos.splice(index, 1);
+      axios.delete(`contactos/${contacto.id}`)
+        .then(res => {
+
+          console.log('Contacto eliminado');
+        })
+        .catch(e => {
+
+          console.log(e.response);
+        });
     }
   }
 }

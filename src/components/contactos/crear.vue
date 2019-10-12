@@ -72,7 +72,6 @@ export default {
       valid: false,
       dialog: false,
       contacto: {
-        id: 10,
         nombre: '',
         email: '',
         telefono: '',
@@ -103,9 +102,19 @@ export default {
     guardar(){
       if(this.valid){
 
-        this.dialog = false;
-        this.$emit('guardar', this.contacto);
-        this.clear();
+        console.log('guardando');
+        axios.post('contactos', this.contacto)
+          .then(res => {
+
+            console.log(res);
+            this.$emit('guardar', res.data);
+            this.dialog = false;
+            this.clear();
+          })
+          .catch(e => {
+
+            console.log(e.response);
+          });
       }else{
 
         this.validate();
