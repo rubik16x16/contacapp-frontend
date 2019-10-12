@@ -2,7 +2,7 @@ FROM node:latest as build-stage
 
 WORKDIR /app
 
-COPY ./contacapp-frontend .
+COPY ./ .
 RUN npm install && npm run build
 
 FROM nginx as production-stage
